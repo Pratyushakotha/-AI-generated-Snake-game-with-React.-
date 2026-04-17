@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Silkscreen:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Silkscreen", "DotGothic16", monospace;
+  --font-mono: "DotGothic16", monospace;
+
+  --color-neon-cyan: #00ffff;
+  --color-neon-magenta: #ff00ff;
+  --color-dark-bg: #000000;
+}
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-neon-cyan font-sans antialiased overflow-hidden;
+    background-image: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+  }
+}
+
+@layer utilities {
+  .glitch-text {
+    position: relative;
+    text-shadow: 2px 0 var(--color-neon-magenta), -2px 0 var(--color-neon-cyan);
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+  }
+
+  .glitch-border {
+    border: 2px solid var(--color-neon-cyan);
+    box-shadow: 4px 4px 0 var(--color-neon-magenta);
+    position: relative;
+  }
+
+  .glitch-border::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--color-neon-magenta);
+    opacity: 0.5;
+    pointer-events: none;
+    animation: glitch-border-anim 1.5s infinite linear;
+  }
+
+  @keyframes glitch-anim {
+    0% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+    25% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+    50% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+    75% { text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
+    100% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+  }
+
+  @keyframes glitch-border-anim {
+    0% { transform: translate(0); }
+    10% { transform: translate(-2px, 2px); }
+    20% { transform: translate(2px, -2px); }
+    30% { transform: translate(-2px, -2px); }
+    40% { transform: translate(2px, 2px); }
+    100% { transform: translate(0); }
+  }
+
+  .static-noise {
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05;
+    pointer-events: none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-neon-magenta;
+}
